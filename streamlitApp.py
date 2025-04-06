@@ -95,7 +95,7 @@ with st.container():
     # When the submit button is clicked, call the wait time predictor function and display the predicted wait time in the output container.
 
     if submit:
-
+    try:
         prediction = waitime_predictor(
             purchase_dow,
             purchase_month,
@@ -105,7 +105,12 @@ with st.container():
             geolocation_state_customer,
             geolocation_state_seller,
             distance,
-            )
+        )
+        # Handle the prediction result
+        st.write(f"Predicted wait time: {prediction}") #replace with your desired display of the prediction.
+
+    except Exception as e:
+        st.error(f"An error occurred during prediction: {e}")
 
         with st.spinner(text='This may take a moment...'):
 
