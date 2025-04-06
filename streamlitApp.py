@@ -18,7 +18,7 @@ st.caption(
 )
 
 # Load the model
-modelfile = "./voting_model.pkl"
+modelfile = "voting_model.pkl"
 voting_model = pickle.load(open(modelfile, "rb"))
 
 # Cache the model prediction function
