@@ -106,12 +106,7 @@ with st.container():
             distance,
         )
         # Handle the prediction result
-        st.write(f"Predicted wait time: {prediction}") #replace with your desired display of the prediction.
-
-    except Exception as e:
-        st.error(f"An error occurred during prediction: {e}")
-
-        with st.spinner(text='This may take a moment...'):
+       with st.spinner(text='This may take a moment...'):
 
             st.write(prediction)
 
