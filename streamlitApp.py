@@ -4,18 +4,14 @@ import pandas as pd
 import pickle
 import os
 from PIL import Image
-
 # Set Streamlit page config
 st.set_page_config(page_title="Timelytics", page_icon=":pencil:", layout="wide")
-
 # Title and description
 st.title("Timelytics: Optimize your supply chain with advanced forecasting techniques.")
-
 st.caption(
     "Timelytics is an ensemble model using XGBoost, Random Forest, and SVM to accurately forecast Order to Delivery (OTD) times. "
     "It helps identify bottlenecks and proactively improve supply chain performance."
 )
-
 # Sidebar with inputs
 with st.sidebar:
     try:
@@ -23,9 +19,7 @@ with st.sidebar:
         st.image(img)
     except FileNotFoundError:
         st.warning("Image not found. Please add 'supply_chain_optimisation.jpg' to the assets folder.")
-
     st.header("Input Parameters")
-
     purchase_dow = st.number_input("Purchased Day of the Week", min_value=0, max_value=6, step=1, value=3)
     purchase_month = st.number_input("Purchased Month", min_value=1, max_value=12, step=1, value=1)
     year = st.number_input("Purchased Year", value=2018)
@@ -35,7 +29,6 @@ with st.sidebar:
     geolocation_state_seller = st.number_input("Geolocation State of the Seller", value=20)
     distance = st.number_input("Distance (in km)", value=475.35)
     submit = st.button(label="Predict Wait Time!")
-
 # Function to load model
 @st.cache_resource
 def load_model():
@@ -52,10 +45,8 @@ def load_model():
     except Exception as e:
         st.error(f"An unexpected error occurred while loading the model:\n{e}")
     return None
-
 # Load the model
 voting_model = load_model()
-
 # Prediction logic
 def waitime_predictor(purchase_dow, purchase_month, year, product_size_cm3,
                       product_weight_g, geolocation_state_customer, geolocation_state_seller, distance):
@@ -63,7 +54,6 @@ def waitime_predictor(purchase_dow, purchase_month, year, product_size_cm3,
                              product_weight_g, geolocation_state_customer, geolocation_state_seller, distance]])
     prediction = voting_model.predict(input_array)
     return round(prediction[0])
-
 # Main panel
 with st.container():
     st.header("Output: Wait Time in Days")
@@ -83,7 +73,6 @@ with st.container():
                 st.success(f"⏱️ Estimated Wait Time: **{prediction} days**")
             except Exception as e:
                 st.error(f"Prediction failed: {e}")
-
     # Show sample dataset
     st.header("Sample Dataset")
     data = {
