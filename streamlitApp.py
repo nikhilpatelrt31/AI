@@ -95,8 +95,7 @@ with st.container():
     # When the submit button is clicked, call the wait time predictor function and display the predicted wait time in the output container.
 
     if submit:
-    try:
-        prediction = waitime_predictor(
+            prediction = waitime_predictor(
             purchase_dow,
             purchase_month,
             year,
