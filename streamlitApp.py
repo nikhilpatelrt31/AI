@@ -23,7 +23,7 @@ st.caption('Timelytics is an ensemble model that utilizes XGBoost, Random Forest
 st.caption('It uses historical data on order processing, production, shipping, and other variables to forecast OTD times — helping reduce lead times and improve delivery accuracy.')
 
 # Load the model with error handling
-modelfile = 'voting_model.pkl'
+modelfile = './voting_model.pkl'
 
 try:
     with open(modelfile, 'rb') as f:
