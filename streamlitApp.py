@@ -14,6 +14,7 @@ st.caption('With Timelytics, businesses can identify potential bottlenecks and d
            )
 modelfile = 'voting_model.pkl'
 voting_model = pickle.load(open(modelfile, 'rb'))
+voting_model = pickle.load(open(modelfile, 'rb'))
 
 
 # Caching the model for faster loading
