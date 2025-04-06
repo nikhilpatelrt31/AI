@@ -14,14 +14,17 @@ st.caption('With Timelytics, businesses can identify potential bottlenecks and d
            )
 modelfile = 'voting_model.pkl'  # Replace with the actual file path
 
-if os.path.exists(modelfile):
-    try:
-        voting_model = pickle.load(open(modelfile, 'rb'))
-        # ... rest of your code ...
-    except Exception as e:
-        st.error(f"Error loading model: {e}")
-else:
-    st.error(f"Model file not found: {modelfile}")
+def load_model_and_display(modelfile):
+    if os.path.exists(modelfile): # indented.
+        try:
+            voting_model = pickle.load(open(modelfile, 'rb'))
+            st.write("Model Loaded")
+        except Exception as e:
+            st.error(f"Error loading model: {e}")
+    else:
+        st.error(f"Model file not found: {modelfile}")
+
+load_model_and_display('voting_model.pkl')
 
 
 # Caching the model for faster loading
