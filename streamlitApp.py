@@ -21,7 +21,7 @@ if os.path.exists(modelfile):
     except Exception as e:
         st.error(f"Error loading model: {e}")
 else:
-    st.error(f"Model file not found: {modelfile}"))
+    st.error(f"Model file not found: {modelfile}")
 
 
 # Caching the model for faster loading
