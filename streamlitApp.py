@@ -12,19 +12,8 @@ st.caption('Timelytics is an ensemble model that utilizes three powerful machine
            )
 st.caption('With Timelytics, businesses can identify potential bottlenecks and delays in their supply chain and take proactive measures to address them, reducing lead times and improving delivery times. The model utilizes historical data on order processing times, production lead times, shipping times, and other relevant variables to generate accurate forecasts of OTD times. These forecasts can be used to optimize inventory management, improve customer service, and increase overall efficiency in the supply chain.'
            )
-modelfile = 'voting_model.pkl'  # Replace with the actual file path
-
-def load_model_and_display(modelfile):
-    if os.path.exists(modelfile): # indented.
-        try:
-            voting_model = pickle.load(open(modelfile, 'rb'))
-            st.write("Model Loaded")
-        except Exception as e:
-            st.error(f"Error loading model: {e}")
-    else:
-        st.error(f"Model file not found: {modelfile}")
-
-load_model_and_display('voting_model.pkl')
+modelfile = 'voting_model.pkl'
+voting_model = pickle.load(open(modelfile, 'rb'))
 
 
 # Caching the model for faster loading
