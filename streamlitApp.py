@@ -14,7 +14,7 @@ st.caption('Timelytics is an ensemble model that utilizes three powerful machine
 st.caption('With Timelytics, businesses can identify potential bottlenecks and delays in their supply chain and take proactive measures to address them, reducing lead times and improving delivery times. The model utilizes historical data on order processing times, production lead times, shipping times, and other relevant variables to generate accurate forecasts of OTD times. These forecasts can be used to optimize inventory management, improve customer service, and increase overall efficiency in the supply chain.'
            )
 modelfile = 'voting_model.pkl'
-voting_model = joblib.load(modelfile)
+voting_model = pickle.load(open(modelfile, "rb"))
 
 
 # Caching the model for faster loading
