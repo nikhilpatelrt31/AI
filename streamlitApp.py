@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 from PIL import Image
+import os
 
 # Set page configuration
 st.set_page_config(page_title="Timelytics", page_icon=":pencil:", layout="wide")
@@ -22,6 +23,8 @@ st.caption(
 # Caching the model
 @st.cache_resource
 def load_model():
+    st.write("Looking for model in:", os.getcwd())
+    st.write("Files in dir:", os.listdir())
     with open("./voting_model.pkl", "rb") as file:
         model = pickle.load(file)
     return model
