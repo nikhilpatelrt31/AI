@@ -2,8 +2,7 @@
 import streamlit as st
 import pickle
 import numpy as np
-from PIL
-import Image
+from PIL import Image
 st.set_page_config(page_title = "Timelytics", page_icon = ":pencil:", layout = "wide")
 st.title("Timelytics: Optimize your supply chain with advanced forecasting techniques. ")
 
