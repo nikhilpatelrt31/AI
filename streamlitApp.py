@@ -1,59 +1,49 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import streamlit as st
 import pickle
 import numpy as np
 from PIL import Image
-import pandas as pd  # Import pandas for DataFrame
+import pandas as pd
 
+# Set Streamlit page configuration
 st.set_page_config(page_title='Timelytics', page_icon=':pencil:', layout='wide')
-
 st.title('Timelytics: Optimize your supply chain with advanced forecasting techniques.')
-st.caption(
-    'Timelytics is an ensemble model that utilizes three powerful machine learning algorithms - XGBoost, Random Forests, and Support Vector Machines (SVM) - to accurately forecast Order to Delivery (OTD) times. By combining the strengths of these three algorithms, Timelytics provides a robust and reliable prediction of OTD times, helping businesses to optimize their supply chain operations.'
-)
-st.caption(
-    'With Timelytics, businesses can identify potential bottlenecks and delays in their supply chain and take proactive measures to address them, reducing lead times and improving delivery times. The model utilizes historical data on order processing times, production lead times, shipping times, and other relevant variables to generate accurate forecasts of OTD times. These forecasts can be used to optimize inventory management, improve customer service, and increase overall efficiency in the supply chain.'
-)
+st.caption('Timelytics is an ensemble model that utilizes three powerful machine learning algorithms - XGBoost, Random Forests, and Support Vector Machines (SVM) - to accurately forecast Order to Delivery (OTD) times. By combining the strengths of these three algorithms, Timelytics provides a robust and reliable prediction of OTD times, helping businesses to optimize their supply chain operations.')
+st.caption('With Timelytics, businesses can identify potential bottlenecks and delays in their supply chain and take proactive measures to address them, reducing lead times and improving delivery times. The model utilizes historical data on order processing times, production lead times, shipping times, and other relevant variables to generate accurate forecasts of OTD times. These forecasts can be used to optimize inventory management, improve customer service, and increase overall efficiency in the supply chain.')
 
+# Load the voting model with error handling
 modelfile = 'voting_model.pkl'
 try:
-    voting_model = pickle.load(open(modelfile, 'rb'))
-except FileNotFoundError:
-    st.error(f"Model file '{modelfile}' not found. Please ensure the file is in the correct directory.")
-    st.stop()  # Stop execution if the model file is not found.
+    with open(modelfile, 'rb') as file:
+        voting_model = pickle.load(file)
+except Exception as e:
+    st.error(f"Failed to load the model: {e}")
+    st.stop()
 
-# Caching the model for faster loading
+# Cache the model prediction function
 @st.cache_resource
-def waitime_predictor(
-    purchase_dow,
-    purchase_month,
-    year,
-    product_size_cm3,
-    product_weight_g,
-    geolocation_state_customer,
-    geolocation_state_seller,
-    distance,
-):
-    prediction = voting_model.predict(
-        np.array(
-            [
-                [
-                    purchase_dow,
-                    purchase_month,
-                    year,
-                    product_size_cm3,
-                    product_weight_g,
-                    geolocation_state_customer,
-                    geolocation_state_seller,
-                    distance,
-                ]
-            ]
-        )
-    )
-    return round(prediction[0])
+def waitime_predictor(purchase_dow, purchase_month, year, product_size_cm3,
+                      product_weight_g, geolocation_state_customer,
+                      geolocation_state_seller, distance):
+    try:
+        prediction = voting_model.predict(np.array([[
+            purchase_dow,
+            purchase_month,
+            year,
+            product_size_cm3,
+            product_weight_g,
+            geolocation_state_customer,
+            geolocation_state_seller,
+            distance,
+        ]]))
+        return round(prediction[0])
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
+        return None
 
-# Define the input parameters using Streamlit's sidebar.
+# Sidebar inputs
 with st.sidebar:
     img = Image.open('./assets/supply_chain_optimisation.jpg')
     st.image(img)
@@ -69,12 +59,10 @@ with st.sidebar:
     distance = st.number_input('Distance', value=475.35)
     submit = st.button('Predict')
 
-# Define the submit button for the input parameters.
+# Output Prediction
 with st.container():
-    # Define the output container for the predicted wait time.
     st.header('Output: Wait Time in Days')
 
-    # When the submit button is clicked, call the wait time predictor function and display the predicted wait time in the output container.
     if submit:
         with st.spinner(text='This may take a moment...'):
             prediction = waitime_predictor(
@@ -87,9 +75,11 @@ with st.container():
                 geolocation_state_seller,
                 distance,
             )
-            st.write(prediction)
+            if prediction is not None:
+                st.success(f"Predicted Wait Time: {prediction} days")
 
-    # Define a sample dataset for demonstration purposes.
+# Sample Dataset Display
+    st.header('Sample Dataset')
     data = {
         'Purchased Day of the Week': ['0', '3', '1'],
         'Purchased Month': ['6', '3', '1'],
@@ -100,10 +90,5 @@ with st.container():
         'Geolocation State Seller': ['20', '7', '20'],
         'Distance': ['247.94', '250.35', '4.915'],
     }
-
-    # Create a DataFrame from the sample dataset.
     df = pd.DataFrame(data)
-
-    # Display the sample dataset in the Streamlit app.
-    st.header('Sample Dataset')
     st.write(df)
