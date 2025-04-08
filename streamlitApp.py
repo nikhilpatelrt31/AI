@@ -18,10 +18,11 @@ st.caption(
 
 # Load the model
 modelfile = "voting_model.pkl"
-
+with open("voting_model.pkl", "wb") as f:
+    pickle.dump(voting_model, f)
 try:
-    with open(modelfile, "rb") as f:
-        voting_model = pickle.load(f)
+with open("voting_model.pkl", "wb") as f:
+    pickle.dump(voting_model, f)
 except FileNotFoundError:
     st.error(f"Model file not found at '{modelfile}'. Please make sure it exists.")
     st.stop()  # Prevent the rest of the app from running
