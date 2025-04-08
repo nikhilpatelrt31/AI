@@ -17,16 +17,19 @@ st.caption(
 )
 
 # Load the model
+# Load the model with error handling
 modelfile = "voting_model.pkl"
+
 try:
-with open("voting_model.pkl", "wb") as f:
-    pickle.dump(voting_model, f)
+    with open(modelfile, "rb") as f:
+        voting_model = pickle.load(f)
 except FileNotFoundError:
     st.error(f"Model file not found at '{modelfile}'. Please make sure it exists.")
     st.stop()  # Prevent the rest of the app from running
 except Exception as e:
     st.error(f"An error occurred while loading the model: {e}")
     st.stop()
+
 
 # Caching the model function
 @st.cache_resource
