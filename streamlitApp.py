@@ -18,8 +18,6 @@ st.caption(
 
 # Load the model
 modelfile = "voting_model.pkl"
-with open("voting_model.pkl", "wb") as f:
-    pickle.dump(voting_model, f)
 try:
 with open("voting_model.pkl", "wb") as f:
     pickle.dump(voting_model, f)
