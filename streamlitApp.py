@@ -45,7 +45,7 @@ return round(prediction[0])
 with st.sidebar:
 img = Image.open("./assets/supply_chain_optimisation.jpg")
 st.image(img)
-st.header("Input Parameters")"
+st.header("Input Parameters")
 purchase_dow = st.number_input("Purchased Day of the Week", min_value=0, max_value=6, step=1, value=3)
 purchase_month = st.number_input("Purchased Month", min_value=1, max_value=12, step=1, value=1)
 year = st.number_input("Purchased Year", value=2018)
@@ -76,14 +76,14 @@ st.write(prediction)
 import pandas as pd
 # Define a sample dataset for demonstration purposes.
 data = {
-Purchased Day of the Week": ["0", "3", "1"],
-Purchased Month": ["6", "3", "1"],
-Purchased Year": ["2018", "2017", "2018"],
-Product Size in cm^3": ["37206.0", "63714", "54816"],
-Product Weight in grams": ["16250.0", "7249", "9600"],
-Geolocation State Customer": ["25", "25", "25"],
-Geolocation State Seller": ["20", "7", "20"],
-Distance": ["247.94", "250.35", "4.915"],
+"Purchased Day of the Week": ["0", "3", "1"],
+"Purchased Month": ["6", "3", "1"],
+"Purchased Year": ["2018", "2017", "2018"],
+"Product Size in cm^3": ["37206.0", "63714", "54816"],
+"Product Weight in grams": ["16250.0", "7249", "9600"],
+"Geolocation State Customer": ["25", "25", "25"],
+"Geolocation State Seller": ["20", "7", "20"],
+"Distance": ["247.94", "250.35", "4.915"],
 }
 # Create a DataFrame from the sample dataset.
 df = pd.DataFrame(data)
