@@ -76,14 +76,14 @@ st.write(prediction)
 import pandas as pd
 # Define a sample dataset for demonstration purposes.
 data = {
-Purchased Day of the Week": ["0", "3", "1"],
-Purchased Month": ["6", "3", "1"],
-Purchased Year": ["2018", "2017", "2018"],
-Product Size in cm^3": ["37206.0", "63714", "54816"],
-Product Weight in grams": ["16250.0", "7249", "9600"],
-Geolocation State Customer": ["25", "25", "25"],
-Geolocation State Seller": ["20", "7", "20"],
-Distance": ["247.94", "250.35", "4.915"],
+"Purchased Day of the Week": ["0", "3", "1"],
+"Purchased Month": ["6", "3", "1"],
+"Purchased Year": ["2018", "2017", "2018"],
+"Product Size in cm^3": ["37206.0", "63714", "54816"],
+"Product Weight in grams": ["16250.0", "7249", "9600"],
+"Geolocation State Customer": ["25", "25", "25"],
+"Geolocation State Seller": ["20", "7", "20"],
+"Distance": ["247.94", "250.35", "4.915"],
 }
 # Create a DataFrame from the sample dataset.
 df = pd.DataFrame(data)
