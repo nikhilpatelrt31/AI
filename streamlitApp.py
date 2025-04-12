@@ -1,35 +1,32 @@
 import streamlit as st
-import pickle
-import numpy as np
 import joblib
+import numpy as np
 import pandas as pd
 from PIL import Image
 
-# App Configuration
+# ✅ Streamlit app configuration
 st.set_page_config(page_title="Timelytics", page_icon=":pencil:", layout="wide")
 st.title("Timelytics: Optimize your supply chain with advanced forecasting techniques.")
 
-# App Description
+# ✅ Description
 st.caption(
     "Timelytics is an ensemble model using XGBoost, Random Forests, and SVM to forecast Order to Delivery (OTD) times. "
     "It helps businesses identify supply chain delays, optimize inventory, and improve customer service."
 )
-
 st.caption(
     "Using historical data on order processing, production, shipping times, and more, "
     "Timelytics generates accurate delivery forecasts to streamline operations."
 )
 
-# Caching the model
+# ✅ Model Loader using joblib
 @st.cache_resource
 def load_model():
-    modelfile = "voting_model.pkl"
-    model = joblib.load(modelfile)
-    return model
+    model_path = "voting_model.pkl"
+    return joblib.load(model_path)
 
 voting_model = load_model()
 
-# Prediction function
+# ✅ Prediction function
 def waitime_predictor(
     purchase_dow,
     purchase_month,
@@ -40,22 +37,20 @@ def waitime_predictor(
     geolocation_state_seller,
     distance,
 ):
-    features = np.array(
-        [[
-            purchase_dow,
-            purchase_month,
-            year,
-            product_size_cm3,
-            product_weight_g,
-            geolocation_state_customer,
-            geolocation_state_seller,
-            distance,
-        ]]
-    )
+    features = np.array([[
+        purchase_dow,
+        purchase_month,
+        year,
+        product_size_cm3,
+        product_weight_g,
+        geolocation_state_customer,
+        geolocation_state_seller,
+        distance,
+    ]])
     prediction = voting_model.predict(features)
     return round(prediction[0])
 
-# Sidebar Inputs
+# ✅ Sidebar Inputs
 with st.sidebar:
     img = Image.open("./assets/supply_chain_optimisation.jpg")
     st.image(img)
@@ -71,7 +66,7 @@ with st.sidebar:
     distance = st.number_input("Distance", value=475.35)
     submit = st.button("Predict")
 
-# Output Display
+# ✅ Prediction Output
 with st.container():
     st.header("Output: Wait Time in Days")
     if submit:
@@ -88,7 +83,7 @@ with st.container():
             )
             st.success(f"⏱️ Predicted Wait Time: {prediction} day(s)")
 
-# Sample Dataset
+# ✅ Sample Dataset Display
 st.header("Sample Dataset")
 data = {
     "Purchased Day of the Week": [0, 3, 1],
