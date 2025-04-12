@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import numpy as np
+import joblib
 import pandas as pd
 from PIL import Image
 
@@ -23,8 +24,7 @@ st.caption(
 @st.cache_resource
 def load_model():
     modelfile = "voting_model.pkl"
-    with open(modelfile, "rb") as f:
-        model = pickle.load(f)
+    model = joblib.load(modelfile)
     return model
 
 voting_model = load_model()
